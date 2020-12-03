@@ -28,3 +28,5 @@ Python library for RA6963 controller chip (requires parallel.so)
 Python test file for the Python Library (reqires RA6963.py)
 
 The result: https://youtu.be/7CxnJM1tHzU
+
+Note: If you don't want to control backlight from the program, set bl=-1.  If you are not interested in backlight PWM, set pwm=False.  If there are problems, try to make waiting times longer.
