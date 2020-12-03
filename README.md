@@ -21,8 +21,10 @@ C library compiled for use with Python
 
 ### RA6963.py
 
-Python library for RA6963 controller chip
+Python library for RA6963 controller chip (requires parallel.so)
 
 ### RA6963_test.py
 
-Python tesst file for the Python Library
+Python test file for the Python Library (reqires RA6963.py)
+
+https://youtu.be/7CxnJM1tHzU
