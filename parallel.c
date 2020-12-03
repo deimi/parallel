@@ -358,7 +358,7 @@ int deinitialise(union chip *tempchip)
 }
 
 /* gets: the pointer to chip instance, the pointer to data array, the number of data to read */
-/* read data */
+/* read multiple data */
 int readdata(union chip *tempchip, unsigned char *datapos, int datanum)
 {
    curchip=tempchip;
