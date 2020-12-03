@@ -27,6 +27,4 @@ Python library for RA6963 controller chip (requires parallel.so)
 
 Python test file for the Python Library (reqires RA6963.py)
 
-[![Demo CountPages alpha](https://share.gifyoutube.com/KzB6Gb.gif)](https://www.youtube.com/watch?v=ek1j272iAmc)
-
-https://youtu.be/7CxnJM1tHzU
+The result: https://youtu.be/7CxnJM1tHzU
