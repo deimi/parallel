@@ -2,7 +2,9 @@
 
 This repository is dedicated to fast parallel communications on Raspberry Pi.  The speed is essential when communicating with large liquid crystal displays, as a lot of data has to be transferred for a single full screen picture.
 
-## parallel.c
+## Main library
+
+### parallel.c
 
 General purpose C library for parallel communications on Raspberry Pi
    - supports 6800 and 8080 protocols, both 4 bits and 8 bits
@@ -11,10 +13,16 @@ General purpose C library for parallel communications on Raspberry Pi
    - supports objective oriented programming, initialisation returns the pointer to chip instance
    - all RPi data lines by default in read mode in order to avoid possible conflict and destruction of GPIO pins
 
-## parallel.so
+### parallel.so
 
 C library compiled for use with Python
 
+## Examples of use
+
 ### RA6963.py
 
+Python library for RA6963 controller chip
 
+### RA6963_test.py
+
+Python tesst file for the Python Library
