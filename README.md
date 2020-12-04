@@ -13,6 +13,9 @@ General purpose C library for parallel communications on Raspberry Pi
    - supports objective oriented programming, initialisation returns the pointer to chip instance
    - all RPi data lines by default in read mode in order to avoid possible conflict and destruction of GPIO pins
 
+![Timings](/timings.png)
+
+
 ### parallel.so
 
 C library compiled for use with Python
