@@ -6,9 +6,11 @@
       - supports arbitrary GPIO pins from 0 to 27
       - supports writing and reading, reading is optional
       - supports objective oriented programming, initialisation returns the pointer to chip instance
-      - all RPi data lines by default in read mode in order to avoid possible conflict and destruction of GPIO pins
+      - all RPi data lines by default in read/input mode in order to avoid possible conflict and destruction of GPIO pins
 
    GPIO communication based on Tiny GPIO Access on http://abyz.me.uk/rpi/pigpio/examples.html
+
+   for more information see: https://github.com/marko-pi/parallel, http://www.pinteric.com/displays.html
 */
 
 #include <stdio.h>
@@ -67,7 +69,7 @@ volatile static uint32_t  *gpioReg = MAP_FAILED;
 /* 8 data lines, RS/CD EN/WR RW/RD control lines, protocol, 5 wait times */
 struct chipdata
 {
-   unsigned d7, d6, d5, d4, d3, d2, d1, d0, rscd, enwr, rwrd, protocol, tsetup, tclock, tread, tcommand, thold;
+   unsigned d7, d6, d5, d4, d3, d2, d1, d0, rscd, enwr, rwrd, protocol, tsetup, tclock, tread, tproc, thold;
 };
 
 union chip
@@ -274,7 +276,7 @@ void writeparallel(unsigned char *datapos, int datanum)
          if(curchip->data.protocol == 6800) *(gpioReg + GPCLR0) = clk;
          if(curchip->data.protocol == 8080) *(gpioReg + GPSET0) = clk;
          clock_gettime(CLOCK_MONOTONIC,&ttime);
-         if (j==1) timing = curchip->data.tcommand;
+         if (j==1) timing = curchip->data.tproc;
          else timing = curchip->data.tclock;
       }
    }
@@ -286,7 +288,7 @@ void writeparallel(unsigned char *datapos, int datanum)
 /* returns: the pointer to chip instance */
 /* GPIO number out of range -> undefined line; D3/D2/D1/D0 undefined -> 4 bit communication; RWRD undefined -> write to chip only */
 /* initialise communications */
-union chip *initialise(int d7, int d6, int d5, int d4, int d3, int d2, int d1, int d0, int rscd, int enwr, int rwrd, int protocol, int tsetup, int tclock, int tread, int tcommand, int thold)
+union chip *initialise(int d7, int d6, int d5, int d4, int d3, int d2, int d1, int d0, int rscd, int enwr, int rwrd, int protocol, int tsetup, int tclock, int tread, int tproc, int thold)
 {
    int i;
    int reg, shift;
@@ -318,7 +320,7 @@ union chip *initialise(int d7, int d6, int d5, int d4, int d3, int d2, int d1, i
    tempchip->data.tsetup = (unsigned)tsetup;
    tempchip->data.tclock = (unsigned)tclock;
    tempchip->data.tread = (unsigned)tread;
-   tempchip->data.tcommand = (unsigned)tcommand;
+   tempchip->data.tproc = (unsigned)tproc;
    tempchip->data.thold = (unsigned)thold;
 
    /* chip by default in write mode */
@@ -328,14 +330,14 @@ union chip *initialise(int d7, int d6, int d5, int d4, int d3, int d2, int d1, i
    if((tempchip->data.protocol == 8080) && (tempchip->data.rwrd != UNDEFINED)) *(gpioReg + GPSET0) = (1 << tempchip->data.rwrd);
    if(tempchip->data.protocol == 8080) *(gpioReg + GPSET0) = (1 << tempchip->data.enwr);
 
-   /* RPi data lines by default in read mode */
+   /* RPi data lines by default in read/input mode */
    for (i=0; i<8; i++) if (tempchip->pins[i] != UNDEFINED)
    {
       reg   =  tempchip->pins[i]/10;
       shift = (tempchip->pins[i]%10) * 3;
       gpioBuf[reg] = (gpioBuf[reg] & ~(7<<shift)) | (PI_INPUT<<shift);
    }
-   /* RPi control lines in write mode */
+   /* RPi control lines in write/output mode */
    for (i=8; i<11; i++) if (tempchip->pins[i] != UNDEFINED)
    {
       reg   =  tempchip->pins[i]/10;
@@ -436,7 +438,7 @@ void writedata(union chip *tempchip, unsigned char *datapos, int datanum)
    if(tempchip->data.protocol == 6800) set = set | (1 << curchip->data.rscd);
    if(tempchip->data.protocol == 8080) clr = clr | (1 << curchip->data.rscd);
 
-   /* RPi data lines in write mode */
+   /* RPi data lines in write/output mode */
    gpioBuf[0] = gpioReg[0];
    gpioBuf[1] = gpioReg[1];
    gpioBuf[2] = gpioReg[2];
@@ -453,7 +455,7 @@ void writedata(union chip *tempchip, unsigned char *datapos, int datanum)
 
    writeparallel(datapos, datanum);
 
-   /* RPi data pins in read mode */
+   /* RPi data pins in read/input mode */
    for (i=0; i<bpc; i++)
    {
       reg   =  curchip->pins[i]/10;
@@ -485,7 +487,7 @@ void writecommand(union chip *tempchip, unsigned char datacom)
    if(tempchip->data.protocol == 6800) clr = clr | (1 << curchip->data.rscd);
    if(tempchip->data.protocol == 8080) set = set | (1 << curchip->data.rscd);
 
-   /* RPi data lines in write mode */
+   /* RPi data lines in write/output mode */
    gpioBuf[0] = gpioReg[0];
    gpioBuf[1] = gpioReg[1];
    gpioBuf[2] = gpioReg[2];
@@ -502,7 +504,7 @@ void writecommand(union chip *tempchip, unsigned char datacom)
 
    writeparallel(&datacom, 1);
 
-   /* RPi data lines in read mode */
+   /* RPi data lines in read/input mode */
    for (i=0; i<bpc; i++) if (tempchip->pins[i] != UNDEFINED)
    {
       reg   =  curchip->pins[i]/10;

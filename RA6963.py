@@ -38,7 +38,7 @@ deinitialise = parallel.deinitialise
 deinitialise.argtypes = [c_void_p]
 
 """
-object = initialise(d7, d6, d5, d4, d3, d2, d1, d0, rscd, enwr, rwrd, protocol, tsetup, tclock, tread, tcommand, thold)
+object = initialise(d7, d6, d5, d4, d3, d2, d1, d0, rscd, enwr, rwrd, protocol, tsetup, tclock, tread, tproc, thold)
 
 Create an instance of the device.
 Gets: 8 data lines, RS/CD EN/WR RW/RD control lines, protocol, 5 wait times
@@ -190,7 +190,7 @@ class RA6963(object):
         # software default value
         self._modeset = 0
 
-        # manual: tsetup, tclock, tread, tcommand, thold = 20, 80, 150, 80, 50
+        # manual: tsetup, tclock, tread, tproc, thold = 20, 80, 150, 80, 50
         self._dev = initialise(d7, d6, d5, d4, d3, d2, d1, d0, cd, wr, rd, 8080, 20, 2000, 300, 1000, 2000)
 
         # backlight power setup
