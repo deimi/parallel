@@ -47,7 +47,7 @@ GPIO number out of range -> undefined line; D3/D2/D1/D0 undefined -> 4 bit commu
 """
 initialise = parallel.initialise
 initialise.restype = c_void_p
-initialise.argtypes = [c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int]
+initialise.argtypes = [c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int, c_int]
 
 """
 readdata(object, [datapos], datanum)
