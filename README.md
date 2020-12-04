@@ -14,7 +14,6 @@ General purpose C library for parallel communications on Raspberry Pi
    - all RPi data lines by default in read mode in order to avoid possible conflict and destruction of GPIO pins
 
 ![Times](/times.png)
-
 \* on writing between two half-bytes (4 bits protocol): *t*<sub>clock</sub>; on writing after full byte: *t*<sub>proc</sub>; on reading: larger of *t*<sub>clock</sub> and *t*<sub>hold</sub>.
 
 ### parallel.so
