@@ -15,7 +15,7 @@ General purpose C library for parallel communications on Raspberry Pi
 
 ![Times](/times.png)
 
-* on writing between two half-bytes (4 bits protocol): *t*<sub>clock</sub>; on writing after full byte: *t*<sub>proc</sub>; on reading: larger of *t*<sub>clock</sub> and *t*<sub>hold</sub>.
+\* on writing between two half-bytes (4 bits protocol): *t*<sub>clock</sub>; on writing after full byte: *t*<sub>proc</sub>; on reading: larger of *t*<sub>clock</sub> and *t*<sub>hold</sub>.
 
 ### parallel.so
 
