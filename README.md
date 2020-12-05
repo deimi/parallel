@@ -15,7 +15,7 @@ General purpose C library for parallel communications on Raspberry Pi
 
 ![Times](/times.png)
 
-\* on writing between two half-bytes (4 bits protocol): *t*<sub>clock</sub>; on writing after full byte: *t*<sub>proc</sub>; on reading: larger of *t*<sub>clock</sub> and *t*<sub>hold</sub>.
+\* on writing between two half-bytes (4 bits protocol): *t*<sub>clock</sub>; on writing after full byte: *t*<sub>proc</sub>; on reading between two half-bytes (4 bits protocol): larger of *t*<sub>clock</sub> and *t*<sub>hold</sub>; on reading after full byte: larger of *t*<sub>proc</sub> and *t*<sub>hold</sub>.
 
 [More information of parallel protocols](http://www.pinteric.com/displays.html#par)
 
@@ -32,6 +32,18 @@ Python library for RA6963 controller chip (requires parallel.so)
 ### RA6963_test.py
 
 Python test file for the Python Library (reqires RA6963.py)
+
+[The result](https://youtu.be/7CxnJM1tHzU)
+
+**Note:** If you don't want to control backlight from the program, set <code>bl=-1</code>.  If you are not interested in backlight PWM, set <code>pwm=False</code>.  If there are problems, try to make waiting times longer.
+
+### HD44780.py
+
+Python library for HD44780 controller chip (requires parallel.so)
+
+### HD44780_test.py
+
+Python test file for the Python Library (reqires HD44780.py)
 
 [The result](https://youtu.be/7CxnJM1tHzU)
 
