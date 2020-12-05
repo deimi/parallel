@@ -33,7 +33,7 @@ Python library for HD44780 controller chip (requires parallel.so)
 
 Python test file for the Python Library (reqires HD44780.py)
 
-[The result](https://youtu.be/7CxnJM1tHzU)
+[The result](https://youtu.be/9l0SO73js7g)
 
 **Note:** If you don't want to control backlight from the program, set <code>bl=-1</code>.  If you are not interested in backlight PWM, set <code>pwm=False</code>.  If there are problems, try to make waiting times longer.
 
