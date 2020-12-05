@@ -93,6 +93,8 @@ gpioSetMode(gpio, mode)
 Set the GPIO mode.
 """
 PI_OUTPUT = 1
+PI_ALT0 = 4
+PI_ALT5 = 2
 gpioSetMode = parallel.gpioSetMode
 gpioSetMode.argtypes = [c_uint, c_uint]
 
@@ -166,18 +168,7 @@ class RA6963(object):
     def __init__(self, pixx, pixy, d7, d6, d5, d4, d3, d2, d1, d0, rst, cd, wr, rd=-1, bl=-1,  backlight=1.0, pwm=False, addr=None):
         self._pixx = pixx
         self._pixy = pixy
-        self._d7 = d7
-        self._d6 = d6
-        self._d5 = d5
-        self._d4 = d4
-        self._d3 = d3
-        self._d2 = d2
-        self._d1 = d1
-        self._d0 = d0
         self._rst = rst
-        self._cd = cd
-        self._wr = wr
-        self._rd = rd
         self._pwm = pwm
         self.addr = addr
         # screen attributes
@@ -206,11 +197,12 @@ class RA6963(object):
                     print('GPIO%d not PWM hardware pin.' % bl)
                     bl = -1
                 if (bl != -1):
+                    if (bl==12 or bl==13): gpioSetMode(bl, PI_ALT0)
+                    if (bl==18 or bl==19): gpioSetMode(bl, PI_ALT5)
                     self._path = PWMPATH + '/pwm%d' % self._pwmchan
                     if not os.path.isdir(self._path):
                         with open(PWMPATH + '/export', 'w') as f: f.write('%d' % self._pwmchan)
-                    time.sleep(0.1)
-#                    with open(self._path + '/duty_cycle', 'w') as f: f.write('0')
+                    time.sleep(0.1) # wait to stabilise
                     with open(self._path + '/period', 'w') as f: f.write('%d' % PWMPER)
         self._bl=bl
         if (bl>=0 and bl<=27):
@@ -333,9 +325,9 @@ class RA6963(object):
     def cursorpattern(self, patt):
         writecommand(self._dev, LCD_CURSORPATTERNSELECT | patt)
 
-    # write custom characters (first 128 are predefined), parameters: list of c_uint64
-    def definechars(self, chars):
-        self.setaddress(self.cgaddress+128*8)
+    # write custom characters (first 128 are predefined), parameters: list of c_uint64, location of the first character
+    def definechars(self, chars, location = 0):
+        self.setaddress(self.cgaddress+128*8 + location*8)
         writecommand(self._dev, LCD_SETDATAAUTOWRITE)
         for i in chars:
             temp = (c_uint64.__ctype_be__ *1) (i)

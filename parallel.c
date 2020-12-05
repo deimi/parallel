@@ -214,9 +214,9 @@ void readparallel(unsigned char *datapos, int datanum)
          if(curchip->data.protocol == 6800) *(gpioReg + GPCLR0) = clk;
          if(curchip->data.protocol == 8080) *(gpioReg + GPSET0) = clk;
          clock_gettime(CLOCK_MONOTONIC,&ttime);
-         
-         if (curchip->data.thold > curchip->data.tclock) timing = curchip->data.thold;
+         if (j==1) timing = curchip->data.tproc;
          else timing = curchip->data.tclock;
+         if (curchip->data.thold > timing) timing = curchip->data.thold;
       }
       datapos[i]=value;
    }
