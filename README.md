@@ -23,19 +23,7 @@ General purpose C library for parallel communications on Raspberry Pi
 
 C library compiled for use with Python
 
-## Examples of use
-
-### RA6963.py
-
-Python library for RA6963 controller chip (requires parallel.so)
-
-### RA6963_test.py
-
-Python test file for the Python Library (reqires RA6963.py)
-
-[The result](https://youtu.be/7CxnJM1tHzU)
-
-**Note:** If you don't want to control backlight from the program, set <code>bl=-1</code>.  If you are not interested in backlight PWM, set <code>pwm=False</code>.  If there are problems, try to make waiting times longer.
+## Examples of use: HD44780
 
 ### HD44780.py
 
@@ -44,6 +32,20 @@ Python library for HD44780 controller chip (requires parallel.so)
 ### HD44780_test.py
 
 Python test file for the Python Library (reqires HD44780.py)
+
+[The result](https://youtu.be/7CxnJM1tHzU)
+
+**Note:** If you don't want to control backlight from the program, set <code>bl=-1</code>.  If you are not interested in backlight PWM, set <code>pwm=False</code>.  If there are problems, try to make waiting times longer.
+
+## Examples of use: RA6963
+
+### RA6963.py
+
+Python library for RA6963 controller chip (requires parallel.so)
+
+### RA6963_test.py
+
+Python test file for the Python Library (reqires RA6963.py)
 
 [The result](https://youtu.be/7CxnJM1tHzU)
 
