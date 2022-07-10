@@ -12,7 +12,7 @@
 
    for more information see: https://github.com/marko-pi/parallel, http://www.pinteric.com/displays.html
 
-   Create shared object with: gcc -o spi.so -shared -fPIC spi.c
+   Create shared object with: gcc -o parallel.so -shared -fPIC parallel.c
 */
 
 #include <stdio.h>
