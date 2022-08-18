@@ -182,7 +182,9 @@ class RA6963(object):
         self._modeset = 0
 
         # manual: tsetup, tclock, tread, tproc, thold = 20, 80, 150, 80, 50
-        self._dev = initialise(d7, d6, d5, d4, d3, d2, d1, d0, cd, wr, rd, 8080, 20, 2000, 300, 1000, 2000)
+        #self._dev = initialise(d7, d6, d5, d4, d3, d2, d1, d0, cd, wr, rd, 8080, 20, 2000, 300, 1000, 2000)
+        # with Rpi4
+        self._dev = initialise(d7, d6, d5, d4, d3, d2, d1, d0, cd, wr, rd, 8080, 200, 20000, 3000, 10000, 20000)
 
         # backlight power setup
         if (bl>=0 and bl<=27):
