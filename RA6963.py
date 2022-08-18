@@ -487,7 +487,7 @@ class RA6963(object):
         temp=bytearray(text.replace("\n", ""))
         for i in range(len(temp)):
             temp[i] = temp[i] - 32
-        text = str(temp)
+        text = bytes(temp)
         self.texthome()
         writecommand(self._dev, LCD_SETDATAAUTOWRITE)
         writedata(self._dev, text, len(text))
