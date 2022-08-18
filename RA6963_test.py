@@ -97,8 +97,8 @@ for i in range(4):
 # clear memory after the picture
 # create contiguous data of zeros using string method and send everything in one go 
 ra.setaddress(ra.graphicaddress + 240*128//8)
-temp = chr(0)*(240*128//8)
-ra.writedata(temp, 240*128//8)
+temp = ' '*(240*128//8)
+ra.writetext(temp)
 
 # slowly move picture from the screen, by moving graphics area into cleared memory
 for i in range(128):
