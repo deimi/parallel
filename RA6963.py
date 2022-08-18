@@ -484,7 +484,7 @@ class RA6963(object):
 
     # write a full screen ASCII text, parameter: pointer
     def writetext(self, text):
-        temp=bytearray(text.replace("\n", ""))
+        temp=bytearray(text.replace("\n", ""), encoding='utf-8')
         for i in range(len(temp)):
             temp[i] = temp[i] - 32
         text = bytes(temp)
