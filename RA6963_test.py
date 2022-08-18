@@ -66,7 +66,7 @@ for i in range (11):
 # make subtitle bold and blinking (7th row, 9th column, 14 characters)
 # create contiguous data using string method and send everything in one go 
 ra.setaddress(ra.graphicaddress+6*30+8)
-temp = chr(ra.bold | ra.blink)*14
+temp = bytes(chr(ra.bold | ra.blink)*14, encoding='utf-8')
 ra.writedata(temp, 14)
 
 time.sleep(8)
